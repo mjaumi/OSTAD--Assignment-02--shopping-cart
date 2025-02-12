@@ -9,20 +9,27 @@
     <!-- Custom Stylesheet Link Here -->
     <link rel="stylesheet" href="/styles.css">
 
+    <!-- Font Awesome CDN Link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Tailwind CSS CDN Link -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="w-4/5 mx-auto">
+<body class="w-[95%] md:w-4/5 mx-auto">
     <header class="my-10">
-        <h1 class="text-5xl font-bold border-b-2">All Products</h1>
+        <h1 class="text-center md:text-left text-5xl font-bold border-b-2">All Products</h1>
     </header>
 
     <main>
-
+        <section id="products-container"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 px-3 mb-10">
+        </section>
     </main>
 
-    <script src="scripts/products.js"></script>
+    <script src="/scripts/products.js"></script>
 </body>
 
 </html>

@@ -24,7 +24,7 @@
         "id": 4,
         "name": "OnePlus 12",
         "image": "https://fdn2.gsmarena.com/vv/pics/oneplus/oneplus-12-1.jpg",
-        "description": "A powerful and fast smartphone with Snapdragon 8 Gen 3 and a Hasselblad-tuned camera.",
+        "description": "A powerful smartphone with Snapdragon 8 Gen 3 and a Hasselblad-tuned camera.",
         "price": 800
     },
     {
@@ -36,27 +36,20 @@
     },
     {
         "id": 6,
-        "name": "Sony Xperia 1 V",
-        "image": "https://fdn2.gsmarena.com/vv/pics/sony/sony-xperia-1-v-0.jpg",
-        "description": "A phone designed for creators with a 4K OLED display and pro-grade cameras.",
-        "price": 850
-    },
-    {
-        "id": 7,
         "name": "ASUS ROG Phone 8",
         "image": "https://fdn2.gsmarena.com/vv/pics/asus/asus-rog-phone-8-1.jpg",
         "description": "A gaming powerhouse with 165Hz AMOLED display and Snapdragon 8 Gen 3.",
         "price": 770
     },
     {
-        "id": 8,
+        "id": 7,
         "name": "Nothing Phone (2)",
         "image": "https://fdn2.gsmarena.com/vv/pics/nothing/nothing-phone2-1_.jpg",
         "description": "A unique transparent design phone with Glyph Interface and Snapdragon 8+ Gen 1.",
         "price": 620
     },
     {
-        "id": 9,
+        "id": 8,
         "name": "Realme GT 5 Pro",
         "image": "https://fdn2.gsmarena.com/vv/pics/realme/realme-gt5-pro-1.jpg",
         "description": "A budget-friendly flagship with a Snapdragon 8 Gen 3 and a 144Hz AMOLED display.",
