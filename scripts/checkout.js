@@ -4,6 +4,8 @@ function loadCartProducts() {
 
     const checkoutCartContainer = document.getElementById('checkout-cart-container')
 
+    checkoutCartContainer.replaceChildren()
+
     if (cartProducts.length) {
         cartProducts.forEach(product => {
             const checkoutCard = document.createElement('div')
@@ -26,10 +28,11 @@ function loadCartProducts() {
                 </figcaption>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center gap-3 md:gap-10 pr-4">
+            <div class="flex flex-col md:flex-row items-center gap-3 md:gap-5 lg:gap-10 pr-4">
                 <div class="text-center">
                     <p class="text-xs lg:text-sm font-semibold">Unit Price</p>
-                    <p class="text-2xl font-semibold text-emerald-400">
+                    <p class="text-2xl font-semibold text-emerald-400 text-nowrap">
+                        <i class="fa-solid fa-dollar-sign"></i>
                         ${product.price}
                     </p>
                 </div>
@@ -39,7 +42,9 @@ function loadCartProducts() {
                     <div
                         class="flex items-center justify-center border-2 border-blue-200 rounded-lg overflow-hidden">
                         <button
-                            class="size-[50px] bg-white text-blue-400 text-lg font-semibold cursor-pointer hover:bg-blue-300 active:scale-95 duration-300">
+                            class="decrease-quantity size-[50px] bg-white text-blue-400 text-lg font-semibold cursor-pointer disabled:cursor-not-allowed disabled:bg-blue-100 hover:bg-blue-300 active:scale-95 duration-300"
+                            ${product.quantity === 0 ? 'disabled' : ''}
+                        >
                             <i class="fa-solid fa-minus"></i>
                         </button>
 
@@ -52,7 +57,7 @@ function loadCartProducts() {
                         </div>
 
                         <button
-                            class="size-[50px] bg-white text-blue-400 text-lg font-semibold cursor-pointer hover:bg-blue-300 active:scale-95 duration-300">
+                            class="increase-quantity size-[50px] bg-white text-blue-400 text-lg font-semibold cursor-pointer hover:bg-blue-300 active:scale-95 duration-300">
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </div>
@@ -60,12 +65,16 @@ function loadCartProducts() {
 
                 <div class="text-center">
                     <p class="text-xs lg:text-sm font-semibold">Sub Total</p>
-                    <p class="text-2xl font-semibold text-blue-500">
+                    <p class="text-2xl font-semibold text-blue-500 text-nowrap">
+                        <i class="fa-solid fa-dollar-sign"></i>
                         ${product.price * product.quantity}
                     </p>
                 </div>
             </div>
         `
+
+            checkoutCard.querySelector('.decrease-quantity').addEventListener('click', () => updateCart(product.id, 'decrease'))
+            checkoutCard.querySelector('.increase-quantity').addEventListener('click', () => updateCart(product.id, 'increase'))
 
             checkoutCartContainer.appendChild(checkoutCard)
         });
@@ -76,7 +85,10 @@ function loadCartProducts() {
 
         totalPriceDiv.innerHTML = `
         <p>Total</p>
-        <p class="text-blue-400">${cartProducts.reduce((total, product) => total += (product.price * product.quantity), 0)}</p>
+        <p class="text-blue-400">
+            <i class="fa-solid fa-dollar-sign"></i>
+            ${cartProducts.reduce((total, product) => total += (product.price * product.quantity), 0)}
+        </p>
     `
 
         checkoutCartContainer.appendChild(totalPriceDiv)
@@ -95,10 +107,45 @@ function loadCartProducts() {
     }
 }
 
+// function to update cart declared here
+function updateCart(productId, increaseOrDecrease) {
+    let cartProducts = JSON.parse(localStorage.getItem('shopping-cart')) || []
+
+    if (increaseOrDecrease === 'increase') {
+        cartProducts = cartProducts.map(cartItem => {
+            if (cartItem.id === productId) {
+                return {
+                    ...cartItem,
+                    quantity: cartItem.quantity + 1,
+                }
+            }
+
+            return cartItem
+        })
+
+    } else {
+        cartProducts = cartProducts.map(cartItem => {
+            if (cartItem.id === productId && cartItem.quantity) {
+                return {
+                    ...cartItem,
+                    quantity: cartItem.quantity - 1,
+                }
+            }
+
+            return cartItem
+        })
+    }
+
+    localStorage.setItem('shopping-cart', JSON.stringify(cartProducts))
+    loadCartProducts()
+}
+
 // function to implement clear cart declared here
 function clearCart() {
     localStorage.removeItem('shopping-cart')
     loadCartProducts()
+
+    alert('Cart has been cleared successfully!!')
 }
 
 loadCartProducts()
