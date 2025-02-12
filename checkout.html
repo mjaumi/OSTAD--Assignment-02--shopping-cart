@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart || Milhan Joardar Aumi</title>
+    <title>Checkout || Milhan Joardar Aumi</title>
 
     <!-- Custom Stylesheet Link Here -->
     <link rel="stylesheet" href="/styles.css">
@@ -18,24 +18,23 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="w-[95%] md:w-4/5 mx-auto text-gray-900">
+<body class="w-[95%] md:w-[90%] lg:w-4/5 mx-auto text-gray-900">
     <header class="flex items-center justify-between my-10 border-b-2 pb-2 px-3">
-        <h1 class="text-center md:text-left text-5xl font-bold">All Products</h1>
+        <h1 class="text-center md:text-left text-5xl font-bold">Checkout</h1>
 
-        <a href="/checkout.html" class="relative text-4xl text-blue-400 hover:text-blue-300 duration-300">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span id="cart-product-counter"
-                class="absolute text-xs -top-2 -right-2 font-semibold text-white bg-red-500 px-2 py-1 rounded-full">0</span>
-        </a>
+        <button onclick="clearCart()"
+            class="bg-red-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:opacity-70 active:scale-95 duration-300">
+            <i class="fa-regular fa-trash-can"></i>
+            Clear Cart
+        </button>
     </header>
 
     <main>
-        <section id="products-container"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 px-3 mb-10">
+        <section id="checkout-cart-container" class="grid grid-cols-1 gap-5 px-3 mb-10">
         </section>
     </main>
 
-    <script src="/scripts/products.js"></script>
+    <script src="/scripts/checkout.js"></script>
 </body>
 
 </html>
