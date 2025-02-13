@@ -1,6 +1,6 @@
 // function to load products from local JSON file declared here
 async function loadProducts() {
-    const productRes = await fetch('../products.json')
+    const productRes = await fetch('products.json')
 
     return productRes.json()
 }
