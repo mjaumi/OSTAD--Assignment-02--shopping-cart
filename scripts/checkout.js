@@ -99,7 +99,7 @@ function loadCartProducts() {
         noCartProductMessage.className = 'text-center font-bold text-red-500 text-2xl'
         noCartProductMessage.innerText = 'The cart is empty!!'
 
-        getBackButton.href = 'https://mjaumi.github.io/OSTAD--Assignment-02--shopping-cart/'
+        getBackButton.href = './index.html'
         getBackButton.className = 'w-fit mx-auto bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:opacity-70 active:scale-95 duration-300'
         getBackButton.innerText = 'Get back to home page'
 
