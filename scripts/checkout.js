@@ -1,3 +1,5 @@
+let promoCode = ''
+
 // function to load cart products from local storage declared here
 function loadCartProducts() {
     const cartProducts = JSON.parse(localStorage.getItem('shopping-cart')) || []
@@ -79,18 +81,137 @@ function loadCartProducts() {
             checkoutCartContainer.appendChild(checkoutCard)
         });
 
-        const totalPriceDiv = document.createElement('div')
+        const promoCodeDiv = document.createElement('div')
 
-        totalPriceDiv.className = 'flex items-center justify-center md:justify-end gap-5 text-4xl font-bold border-t-2 p-3'
+        promoCodeDiv.className = 'flex flex-col md:flex-row items-center justify-end gap-5 border-2 rounded-xl border-emerald-400 p-3'
 
-        totalPriceDiv.innerHTML = `
-        <p>Total</p>
+        promoCodeDiv.innerHTML = `
+            <input type="text" id="promo-code-input" class="border-2 border-emerald-400 rounded-md px-4 py-2"
+               value="${promoCode}" placeholder="Enter promo code...">
+            <button type="button"
+                class="apply-promo w-full md:w-fit bg-emerald-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:opacity-70 active:scale-95 duration-300">Apply
+                Promo Code</button>
+        `
+
+        promoCodeDiv.querySelector('.apply-promo').addEventListener('click', () => {
+            const promoCodeInput = document.getElementById('promo-code-input')
+
+            promoCode = promoCodeInput.value
+
+            if (promoCode === 'ostad5' || promoCode === 'ostad10') {
+                alert('Promo code applied successfully!!')
+            } else {
+                alert('Invalid promo code!!')
+            }
+
+            loadCartProducts()
+        })
+
+        checkoutCartContainer.appendChild(promoCodeDiv)
+
+        const subTotalPriceDiv = document.createElement('div')
+
+        subTotalPriceDiv.className = 'flex items-center justify-center md:justify-end gap-5 text-4xl font-bold border-t-2 p-3'
+
+        subTotalPriceDiv.innerHTML = `
+        <p>Sub Total</p>
         <p class="text-blue-400">
             <i class="fa-solid fa-dollar-sign"></i>
             ${cartProducts.reduce((total, product) => total += (product.price * product.quantity), 0)}
         </p>
     `
 
+        checkoutCartContainer.appendChild(subTotalPriceDiv)
+
+        const discountedPriceDiv = document.createElement('div')
+
+        discountedPriceDiv.className = 'flex items-center justify-center md:justify-end gap-5 text-4xl font-bold border-t-2 p-3'
+
+
+
+        const totalPriceDiv = document.createElement('div')
+
+        totalPriceDiv.className = 'flex items-center justify-center md:justify-end gap-5 text-4xl font-bold border-t-2 p-3'
+
+
+
+        if (promoCode) {
+            if (promoCode === 'ostad5') {
+
+
+                const { discountedPrice, totalPrice } = calculatePromoCode(cartProducts.reduce((total, product) => total += (product.price * product.quantity), 0), 5)
+
+                discountedPriceDiv.innerHTML = `
+            <p>Discounted Price</p>
+            <p class="text-red-400">
+                <i class="fa-solid fa-dollar-sign"></i>
+                ${discountedPrice}
+            </p>
+        `
+
+                totalPriceDiv.innerHTML = `
+            <p>Total Price</p>
+            <p class="text-emerald-400">
+                <i class="fa-solid fa-dollar-sign"></i>
+                ${totalPrice}
+            </p>
+        `
+            } else if (promoCode === 'ostad10') {
+                const { discountedPrice, totalPrice } = calculatePromoCode(cartProducts.reduce((total, product) => total += (product.price * product.quantity), 0), 10)
+
+                discountedPriceDiv.innerHTML = `
+            <p>Discounted Price</p>
+            <p class="text-red-400">
+                <i class="fa-solid fa-dollar-sign"></i>
+                ${discountedPrice}
+            </p>
+        `
+
+                totalPriceDiv.innerHTML = `
+            <p>Total Price</p>
+            <p class="text-emerald-400">
+                <i class="fa-solid fa-dollar-sign"></i>
+                ${totalPrice}
+            </p>
+        `
+            } else {
+                discountedPriceDiv.innerHTML = `
+            <p>Discounted Price</p>
+            <p class="text-red-400">
+                <i class="fa-solid fa-dollar-sign"></i>
+                0
+            </p>
+        `
+
+                totalPriceDiv.innerHTML = `
+            <p>Total Price</p>
+            <p class="text-emerald-400">
+                <i class="fa-solid fa-dollar-sign"></i>
+                ${cartProducts.reduce((total, product) => total += (product.price * product.quantity), 0)}
+            </p>
+        `
+            }
+        } else {
+            discountedPriceDiv.innerHTML = `
+            <p>Discounted Price</p>
+            <p class="text-red-400">
+                <i class="fa-solid fa-dollar-sign"></i>
+                0
+            </p>
+        `
+
+            totalPriceDiv.innerHTML = `
+            <p>Total Price</p>
+            <p class="text-emerald-400">
+                <i class="fa-solid fa-dollar-sign"></i>
+                ${cartProducts.reduce((total, product) => total += (product.price * product.quantity), 0)}
+            </p>
+        `
+        }
+
+
+
+        checkoutCartContainer.appendChild(discountedPriceDiv)
         checkoutCartContainer.appendChild(totalPriceDiv)
     } else {
         const noCartProductMessage = document.createElement('p')
@@ -146,6 +267,13 @@ function clearCart() {
     loadCartProducts()
 
     alert('Cart has been cleared successfully!!')
+}
+
+function calculatePromoCode(subTotal, percentage) {
+    const discountedPrice = subTotal * (percentage / 100);
+    const totalPrice = subTotal - discountedPrice;
+
+    return { discountedPrice, totalPrice }
 }
 
 loadCartProducts()
